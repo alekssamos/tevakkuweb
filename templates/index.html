@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+    <script>
+        function search() {
+            var q = document.getElementById("query").value.replace(" ", "");
+            if   (q=="") return false;
+            // alert(q);
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <h1>Index</h1>
+    <p class="important">
+      Enter the request into the form and get the result
+    </p>
+<form method="GET">
+<p>
+<label for="query">query:</label>
+<input type="search" id="query" name="q" value="{{ q }}" maxlength="500" required pattern=".{2,}">
+</p>
+<p>
+<input type="submit" value="search">
+</p>
+</form>
+{% if requested %}
+<h3>search results</h3>
+{% if not response.results.sentences and not response.results.tevakku %}
+<p>Nothing was found.</p>
+{% endif %}
+{% if response.results.tevakku %}
+<table>
+<caption>tevakku</caption>
+<thead>
+<tr>
+<th>word</th>
+<th>description</th>
+<th>meanings_strong</th>
+<th>meanings_weak</th>
+</tr>
+</thead>
+<tbody>
+{% for tevakkuitem in response.results.tevakku %}
+<tr id="tevakku{{ tevakkuitem.id }}">
+<td>{{ tevakkuitem.word }}</td>
+<td>{{ tevakkuitem.description }}</td>
+<td>{{ tevakkuitem.meanings_strong }}</td>
+<td>{{ tevakkuitem.meanings_weak }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% if response.results.sentences %}
+<table>
+<caption>sentences</caption>
+<thead>
+<tr>
+<th>sentence</th>
+<th>translation</th>
+</tr>
+</thead>
+<tbody>
+{% for sentenceitem in response.results.sentences %}
+<tr id="sentence{{ sentenceitem.word_id }}">
+<td>{{ sentenceitem.sentence }}</td>
+<td>{{ sentenceitem.translation }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% endif %}
+{% endblock %}

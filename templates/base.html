@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - tevakku web API</title>
+    {% endblock %}
+</head>
+<body>
+    <nav>
+    <p><a href="{{ url_for("index_page") }}">Index page</a></p>
+    </nav>
+    <article>
+        <div id="content">
+            <a name="top"></a>
+            {% block content %}{% endblock %}
+            <p><a href="#top">return to top</a></p>
+        </div>
+    </article>
+    <footer>
+        <div id="footer">
+            {% block footer %}
+            &copy; Copyright 2021 by <a target="_blank" href="https://github.com/alekssamos/tevakkuweb/">alekssamos</a>.
+            {% endblock %}
+        </div>
+    </footer>
+</body>
+</html>
