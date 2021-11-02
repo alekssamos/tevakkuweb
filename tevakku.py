@@ -33,5 +33,5 @@ class Tevakku():
         with sqlite3.connect(self.filename) as conn:
             conn.row_factory = dict_factory
             cur = conn.cursor()
-            cur.execute("SELECT * FROM tevakku WHERE word_search = '?' OR word = '?' OR description_search like '%'||?||'%'", (q,))
+            cur.execute("SELECT * FROM tevakku WHERE word_search LIKE ? OR description_search LIKE '%'||?||'%'", (q,q))
             return cur.fetchall()
